@@ -26,7 +26,7 @@ network for both A (IPv4) and AAAA (IPv6) requests`,
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := RootCmd.Execute(); err != nil {
-		fmt.Println(err)
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(-1)
 	}
 }
@@ -55,5 +55,8 @@ func initConfig() {
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
-	viper.ReadInConfig()
+	if err := viper.ReadInConfig(); err != nil {
+		fmt.Fprintf(os.Stderr, "Error reading config file: %s\n", err)
+		// TO-DO: Should an error reading the config be fatal
+	}
 }
