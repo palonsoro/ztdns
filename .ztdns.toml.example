@@ -3,6 +3,7 @@
 suffix = "zt"
 port = 53
 interface = "zt0"
+resolve-offline = false
 
 # Number of minutes to wait before updating the DNS database again (Default: 30)
 DBRefresh = 30
@@ -18,4 +19,5 @@ URL = "https://my.zerotier.com/api"
 # Format is: domain = "NetworkID"
 # Domain does not have to match the configured network name
 [Networks]
+
 

@@ -35,6 +35,7 @@ Example: ztdns mkconfig [.filename.toml]`,
 suffix = "zt"
 port = 53
 interface = "zt0"
+resolve-offline = false
 
 # Number of minutes to wait before updating the DNS database again (Default: 30)
 DBRefresh = 30
