@@ -32,9 +32,13 @@ Example: ztdns mkconfig [.filename.toml]`,
 			defer file.Close()
 			file.WriteString(`# Configuration file for ztDNS
 
+# Domain suffix for all networks
 suffix = "zt"
+# Listen port
 port = 53
+# Interface whose adress ztdns will bind to (leave empty to bind to all addresses)
 interface = "zt0"
+# Whether offline peers must be resolved or not (Default: false)
 resolve-offline = false
 
 # Number of minutes to wait before updating the DNS database again (Default: 30)
@@ -42,7 +46,7 @@ DBRefresh = 30
 
 # This section contains information related to your ZeroTier config
 [ZT]
-# API is used to contact the ZeroTier controller API service.
+# API key used to contact the ZeroTier controller API service.
 API = ""
 # URL is the url of the ZeroTier controller API
 URL = "https://my.zerotier.com/api"
