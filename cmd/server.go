@@ -77,6 +77,7 @@ func updateDNS() time.Time {
 	API := viper.GetString("ZT.API")
 	URL := viper.GetString("ZT.URL")
 	suffix := viper.GetString("suffix")
+	resolveOffline := viper.GetBool("resolve-offline")
 
 	// Get all configured networks:
 	for domain, id := range viper.GetStringMapString("Networks") {
@@ -95,8 +96,8 @@ func updateDNS() time.Time {
 		log.Infof("Got %d members", len(*lst))
 
 		for _, n := range *lst {
-			// For all online members
-			if n.Online {
+			// For all online members or for any member if resolveOffline is true
+			if resolveOffline || n.Online {
 				// Clear current DNS records
 				record := n.Name + "." + domain + "." + suffix + "."
 				dnssrv.DNSDatabase[record] = dnssrv.Records{}
@@ -116,7 +117,7 @@ func updateDNS() time.Time {
 					ip4 = append(ip4, net.ParseIP(a))
 				}
 				// Add the record to the database
-				log.Infof("Updating %-15s IPv4: %-15s IPv6: %s", record, ip4, ip6)
+				log.Infof("Updating %-15s IPv4: %-15s IPv6: %s Online: %t", record, ip4, ip6, n.Online)
 				dnssrv.DNSDatabase[record] = dnssrv.Records{
 					A:    ip4,
 					AAAA: ip6,
